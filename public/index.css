@@ -1,14 +1,16 @@
 body{
     font-family: 'Nunito';
+    /* background-color: #b4b7f0; */
 }
 
 h2{
-    font-size: 18px;
-    padding: 10px 20px;
+    font-size: 25px;
+    padding: 0px 10px;
     color: #575ed8;
+    text-align: center;
 }
 
-#mario-chat{
+#kura{
     max-width: 600px;
     margin: 30px auto;
     border: 1px solid #ddd;

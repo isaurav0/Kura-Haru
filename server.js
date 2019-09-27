@@ -18,6 +18,6 @@ io.on('connection', (socket)=>{
     });
 
     socket.on('typing', data=>{        
-        io.sockets.emit('typing', data);
+        socket.broadcast.emit('typing', data);
     });
 });
