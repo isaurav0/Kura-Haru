@@ -1,0 +1,26 @@
+<h2>Signup</h2>
+<br>
+{{!-- {{#if errors}}
+    {{#if errors.username}}
+        {{erros.username}}
+    {{/if}}
+    {{#if errors.password}}
+        {{erros.password}}
+    {{/if}}
+{{/if}} --}}
+{{{errors.fullname}}}
+{{{errors.username}}}
+{{{errors.password}}}
+<form action="/signup" method="post">
+<label for="fullname">Full Name: </label><br>
+<input type="text" name="fullname" placeholder="Full Name"/> <br><br>
+<label for="username">Username: </label><br>
+<input type="text" name="username" placeholder="Username"/> <br><br>
+<label for="email">Email: </label><br>
+<input type="email" name='email' placeholder="Email"><br><br>
+<label for="password">Password: </label><br>
+<input type="password" name="password" placeholder="Password"><br><br>
+<label for="password">Re-Enter Password: </label><br>
+<input type="password" name="repassword" placeholder="Password"><br><br>
+<input type="submit" value="Signup">
+</form>
