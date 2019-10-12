@@ -27,8 +27,19 @@ passport.use(new LocalStrategy(
                     console.log('not user')
                     return done(null, false, {message: 'Incorrect Username'})
                 }
+                const salt = bcrypt.genSaltSync(saltRounds)
+                const hash = bcrypt.hashSync(password, salt);
+                console.log('hash -> ', hash)
+                console.log('password -> ', user.password)
                 // console.log('From passport: ',user)
-                return done(null, user)
+                bcrypt.compare(hash, user.password, (err, isMatch)=>{
+                    if(err){
+                        console.log(err)
+                        return done(null, false, {message: 'Incorrect Password'})
+                    }
+                    return done(null, user)
+                });
+                
             })
             .catch(err=>console.log(err))
     }

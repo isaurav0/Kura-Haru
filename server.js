@@ -82,3 +82,4 @@ const server = app.listen(3000, ()=> console.log('server started on port 3000'))
 app.use('/', require('./routes/greet'));
 app.use('/signup', require('./routes/signup'));
 app.use('/home', require('./routes/home'));
+app.use('/chatglobal', require('./routes/chatglobal'));
