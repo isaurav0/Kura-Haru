@@ -36,8 +36,8 @@ app.engine('handlebars', expressHandlebars({
 	}
 ));
 
-
 app.set('view engine', 'handlebars');
+
 
 //Express Session
 app.use(expressSession({
@@ -45,6 +45,14 @@ app.use(expressSession({
 	saveUninitialized: true,
 	resave:true
 }));
+
+
+//setup passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+
 
 //Connect flash
 app.use(connectFlash());
@@ -73,3 +81,4 @@ const server = app.listen(3000, ()=> console.log('server started on port 3000'))
 //setup routes
 app.use('/', require('./routes/greet'));
 app.use('/signup', require('./routes/signup'));
+app.use('/home', require('./routes/home'));
