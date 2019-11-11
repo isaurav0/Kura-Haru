@@ -46,7 +46,7 @@ passport.use(new LocalStrategy(
 ));
 
 passport.serializeUser(function(user, done) {
-    console.log("Serializer called: ",user.username);
+    console.log("deserializer")
     done(null, user.username);
 });
 
