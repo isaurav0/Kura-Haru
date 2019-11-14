@@ -1,0 +1,56 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
+<link href="/globalchat.css" rel="stylesheet" />
+<div id="kura">
+    <h2>{{to.name}}</h2>
+    <div id="chat-window">
+        <div id="output"></div>
+        <div id="feedback"></div>
+    </div>
+    <input id="handle" type="text" placeholder="Name" value="{{{from.name}}}" hidden disabled/>
+    <input id="message" type="text" placeholder="Message" />
+    <button id="send">Send</button>
+</div>
+</body>
+<script src="/privatechat.js"></script>
+
+<script>
+    var info = {{{info}}}
+    var socket = io.connect("localhost:3000");
+
+    var message = document.getElementById('message');
+    var handle = document.getElementById('handle');
+    var button = document.getElementById('send');
+    var output = document.getElementById('output');
+    var feedback = document.getElementById('feedback');
+
+
+    button.addEventListener('click', function(){
+        socket.emit('private', {
+            message: message.value,
+            to_id: info.to.id,
+            from_id: info.from.id
+        });
+        message.value=null;
+    })
+
+    message.addEventListener("keyup", function(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            button.click();
+        }
+    });
+
+    message.addEventListener('keypress', function(){
+        socket.emit('typing', handle.value);
+    })
+
+    socket.on('chat', function(data){
+        output.innerHTML += '<P> <strong>'+data.handle+ ': </strong>'+ data.message +'</p>'
+        feedback.innerHTML =''
+    })
+
+    socket.on('typing', function(name){
+        feedback.innerHTML = '<p><em>.... '+ name +' is typing.</em></p>'
+    })
+
+</script>

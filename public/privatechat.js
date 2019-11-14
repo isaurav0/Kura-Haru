@@ -6,14 +6,14 @@ var button = document.getElementById('send');
 var output = document.getElementById('output');
 var feedback = document.getElementById('feedback');
 
+
 button.addEventListener('click', function(){
-    socket.emit('chat', {
+    socket.emit('private', {
         message: message.value,
         handle: handle.value || 'Anonymous'
      });
      message.value=null;
 })
-
 
 message.addEventListener("keyup", function(event) {
     if (event.keyCode === 13) {

@@ -6,7 +6,21 @@ const User = require('../models/User');
 
 router.get('/',ensureAuthenticated, (req, res)=>{
     res.cookie('user', req.user)
-    res.render('home',{title: 'Home'})
+    var muji = [1]
+    var users = []
+    User.findAll().then(results=>{
+        results.forEach(user => {
+            data = {}
+            data['id'] = user.id
+            data['name'] = user.name 
+            users.push(data)
+        });
+        // res.send(users)
+        res.render('home',{title: 'Home',users})
+    })
+    .catch(err=>res.send('database query error'))
+    
+
     // res.send(`Hello ${user.name}`)
 })
 

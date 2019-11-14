@@ -55,8 +55,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-
-
 //Connect flash
 app.use(connectFlash());
 
@@ -74,7 +72,11 @@ io.on('connection', (socket)=>{
 
     socket.on('chat', data=>{
         io.sockets.emit('chat', data);
-    });
+	});
+	
+	socket.on('chatprivate', data=>{
+		io.sockets.emit('chatprivate', data);
+	})
 
     socket.on('typing', data=>{        
         socket.broadcast.emit('typing', data);
@@ -86,3 +88,4 @@ app.use('/', require('./routes/greet'));
 app.use('/signup', require('./routes/signup'));
 app.use('/home', require('./routes/home'));
 app.use('/chatglobal', require('./routes/chatglobal'));
+app.use('/chatprivate', require('./routes/chatprivate'));

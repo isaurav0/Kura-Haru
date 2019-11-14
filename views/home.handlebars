@@ -1,2 +1,8 @@
 <h1>Global Chat </h1>
 <a href="/chatglobal">Click here to chat globally</a>
+
+<br>
+{{#each users}}
+<br> 
+    <a href='/chatprivate/{{this.id}}'>{{this.name}}</a>
+{{/each}}
