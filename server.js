@@ -36,9 +36,10 @@ app.engine('handlebars', expressHandlebars({
 	}
 ));
 
+
 app.set('view engine', 'handlebars');
 
-
+//setup cookie parser 
 app.use(cookieParser());
 
 
@@ -65,22 +66,31 @@ app.use(express.static('public'));
 const server = app.listen(3000, ()=> console.log('server started on port 3000'));
 
 // //setup socket
-const io = socket(server)
+const io = socket(server);
+
+const chatmates = {};
 
 io.on('connection', (socket)=>{
-    console.log("Socket connected. Socked id: ", socket.id);
-
+	console.log("Socket connected. Socked id: ", socket.id);
+	// console.log("Socket object: ",socket)
+	console.log("Username: ")
+	
     socket.on('chat', data=>{
+		console.log(data)
         io.sockets.emit('chat', data);
 	});
 	
-	socket.on('chatprivate', data=>{
-		io.sockets.emit('chatprivate', data);
-	})
+	socket.on('private', data=>{
+		io.sockets.emit('private', data);
+	});
 
     socket.on('typing', data=>{        
         socket.broadcast.emit('typing', data);
-    });
+	});
+	
+	socket.on('disconnect', ()=>{
+		console.log(socket.id, )
+	})
 });
 
 //setup routes

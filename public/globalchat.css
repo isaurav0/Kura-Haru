@@ -5,7 +5,7 @@ body{
 h2{
     font-size: 25px;
     padding: 0px 10px;
-    color: #575ed8;
+    color: green;
     text-align: center;
 }
 
@@ -37,7 +37,7 @@ h2{
 }
 
 #output strong{
-    color: #575ed8;
+    color:green;
 }
 
 label{
@@ -60,7 +60,7 @@ input{
 }
 
 button{
-    background: #575ed8;
+    background: green;
     color: #fff;
     font-size: 18px;
     border: 0;
@@ -69,3 +69,17 @@ button{
     border-radius: 0 0 2px 2px;
     box-shadow: 1px 3px 5px rgba(0,0,0,0.09);
 }
+
+#flex{
+    display: grid;
+    position: relative;
+    width: 100%;
+    grid-template-columns: 70% 30%;
+}
+
+#message{
+    display: grid;
+    position: relative;
+    width: 70px:
+}
+

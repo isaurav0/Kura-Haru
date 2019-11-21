@@ -1,4 +1,6 @@
-var socket = io.connect("localhost:3000");
+var socket = io.connect("localhost:3000", function(){
+    username: handle.value
+});
 
 var message = document.getElementById('message');
 var handle = document.getElementById('handle');
