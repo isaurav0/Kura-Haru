@@ -71,30 +71,38 @@ const io = socket(server);
 const chatmates = {};
 
 io.on('connection', (socket)=>{
-	console.log("Socket connected. Socked id: ", socket.id);
+	// console.log("Socket connected. Socked id: ", socket.id);
 	// console.log("Socket object: ",socket)
 	
 	socket.on('SEND_USERNAME', data=>{
-		console.log('Username: ', data.username)
-		chatmates[data.username] = socket.id
+		// console.log('Username: ', data.username)
+		chatmates[data.user_id] = socket.id
 	})
 	
+	//global chat
     socket.on('chat', data=>{
-		// console.log(data)
         io.sockets.emit('chat', data);
 	});
 	
+
+	//private_chat
 	socket.on('private', data=>{
-		io.sockets.emit('private', data);
+		console.log(chatmates[data.to_id])
+		socket.to(chatmates[data.to_id]).emit('private', data);
+		console.log(data)
 	});
 
     socket.on('typing', data=>{        
         socket.broadcast.emit('typing', data);
 	});
-	
-	socket.on('disconnect', ()=>{
-		console.log(socket.id, )
+
+	socket.on('privatetyping', data=>{
+		io.to()
 	})
+	
+	// socket.on('disconnect', ()=>{
+	// 	console.log(socket.id, )
+	// })
 });
 
 //setup routes

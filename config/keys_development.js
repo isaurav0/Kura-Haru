@@ -1,2 +1,3 @@
 var Sequelize = require('sequelize');
-module.exports= db = new Sequelize('postgres://postgres:data@localhost:5432/kuraharu');
+const db = new Sequelize('postgres://postgres:data@localhost:5432/kuraharu', {logging: false});
+module.exports= db

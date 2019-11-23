@@ -6,12 +6,11 @@
         <div id="output"></div>
         <div id="feedback"></div>
     </div>
-    <input id="handle" type="hidden" placeholder="Name" value="{{{from.name}}}" disabled/>
+    <input id="handle" placeholder="Name" value="{{{from.name}}}" disabled/>
     <input id="message" type="text" placeholder="Message" />
     <button id="send">Send</button>
 </div>
 </body>
-<script src="/privatechat.js"></script>
 
 <script>
     var info = {{{info}}}
@@ -24,7 +23,8 @@
     var feedback = document.getElementById('feedback');
 
     socket.emit('SEND_USERNAME', {
-        username: handle.value || 'Anonymous'
+        username: handle.value || 'Anonymous',
+        user_id: info.from.id
 })
 
 
@@ -48,13 +48,15 @@
         socket.emit('typing', handle.value);
     })
 
-    socket.on('chat', function(data){
-        output.innerHTML += '<P> <strong>'+data.handle+ ': </strong>'+ data.message +'</p>'
+    socket.on('private', function(data){
+        console.log('private chat')
+        output.innerHTML += '<P> <strong>'+data.from_id+ ': </strong>'+ data.message +'</p>'
         feedback.innerHTML =''
     })
 
     socket.on('typing', function(name){
         feedback.innerHTML = '<p><em>.... '+ name +' is typing.</em></p>'
     })
+
 
 </script>

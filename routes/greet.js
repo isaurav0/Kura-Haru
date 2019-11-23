@@ -29,8 +29,8 @@ passport.use(new LocalStrategy(
                 }
                 const salt = bcrypt.genSaltSync(saltRounds)
                 const hash = bcrypt.hashSync(password, salt);
-                console.log('hash -> ', hash)
-                console.log('password -> ', user.password)
+                // console.log('hash -> ', hash)
+                // console.log('password -> ', user.password)
                 // console.log('From passport: ',user)
                 bcrypt.compare(hash, user.password, (err, isMatch)=>{
                     if(err){
@@ -45,12 +45,12 @@ passport.use(new LocalStrategy(
 ));
 
 passport.serializeUser(function(user, done) {
-    console.log("deserializer")
+    // console.log("deserializer")
     done(null, user.username);
 });
 
 passport.deserializeUser(function(username, done) {
-    console.log("Deserializer Called");
+    // console.log("Deserializer Called");
     User.findOne({
         where: {
             username: username
