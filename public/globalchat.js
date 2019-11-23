@@ -1,12 +1,14 @@
-var socket = io.connect("localhost:3000", function(){
-    username: handle.value
-});
+var socket = io.connect("localhost:3000");
 
 var message = document.getElementById('message');
 var handle = document.getElementById('handle');
 var button = document.getElementById('send');
 var output = document.getElementById('output');
 var feedback = document.getElementById('feedback');
+
+socket.emit('SEND_USERNAME', {
+        username: handle.value || 'Anonymous'
+})
 
 button.addEventListener('click', function(){
     socket.emit('chat', {

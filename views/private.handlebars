@@ -23,6 +23,10 @@
     var output = document.getElementById('output');
     var feedback = document.getElementById('feedback');
 
+    socket.emit('SEND_USERNAME', {
+        username: handle.value || 'Anonymous'
+})
+
 
     button.addEventListener('click', function(){
         socket.emit('private', {

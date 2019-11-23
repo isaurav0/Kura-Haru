@@ -73,10 +73,14 @@ const chatmates = {};
 io.on('connection', (socket)=>{
 	console.log("Socket connected. Socked id: ", socket.id);
 	// console.log("Socket object: ",socket)
-	console.log("Username: ")
+	
+	socket.on('SEND_USERNAME', data=>{
+		console.log('Username: ', data.username)
+		chatmates[data.username] = socket.id
+	})
 	
     socket.on('chat', data=>{
-		console.log(data)
+		// console.log(data)
         io.sockets.emit('chat', data);
 	});
 	
