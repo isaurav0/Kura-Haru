@@ -89,8 +89,13 @@ io.on('connection', (socket)=>{
 	socket.on('private', data=>{
 		console.log(chatmates[data.to_id])
 		socket.to(chatmates[data.to_id]).emit('private', data);
+		socket.to(chatmates[data.from_id]).emit('private', data);
 		console.log(data)
 	});
+
+	socket.on('self', data=>{
+		socket.to(socket.id).emit('self', data);
+	})
 
     socket.on('typing', data=>{        
         socket.broadcast.emit('typing', data);

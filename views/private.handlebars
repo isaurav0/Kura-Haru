@@ -1,14 +1,18 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
-<link href="/globalchat.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
+<link href=".././globalchat.css" rel="stylesheet" />
 <div id="kura">
-    <h2>{{to.name}}</h2>
+    <h2>{{to.name}} </h2>
     <div id="chat-window">
         <div id="output"></div>
         <div id="feedback"></div>
     </div>
-    <input id="handle" placeholder="Name" value="{{{from.name}}}" disabled/>
-    <input id="message" type="text" placeholder="Message" />
-    <button id="send">Send</button>
+
+    <div id='flex'>
+        <input id="handle" type="hidden" placeholder="Name" value="{{{name}}}" name='username'>
+        <input id="message" type="text" placeholder="Message" />
+        <button id="send">Send</button>
+    </div>
 </div>
 </body>
 
@@ -52,6 +56,7 @@
         console.log('private chat')
         output.innerHTML += '<P> <strong>'+data.from_id+ ': </strong>'+ data.message +'</p>'
         feedback.innerHTML =''
+        socket.emit('self', data)
     })
 
     socket.on('typing', function(name){
