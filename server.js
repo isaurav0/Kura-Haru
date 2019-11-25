@@ -87,9 +87,9 @@ io.on('connection', (socket)=>{
 
 	//private_chat
 	socket.on('private', data=>{
-		console.log(chatmates[data.to_id])
+		console.log('private called backend ')
 		socket.to(chatmates[data.to_id]).emit('private', data);
-		socket.to(chatmates[data.from_id]).emit('private', data);
+		// socket.to(socket.id).emit('self', data);
 		console.log(data)
 	});
 

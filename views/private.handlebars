@@ -1,6 +1,24 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
 <link href=".././globalchat.css" rel="stylesheet" />
+<style>
+
+    .me{
+        float: right;
+        position: relative;
+        margin-top: 2em;
+    }
+
+    .friend{
+        float: left;
+        position: relative;
+        margin-top: 2em;
+    }
+
+</style>
+
+
+
 <div id="kura">
     <h2>{{to.name}} </h2>
     <div id="chat-window">
@@ -14,7 +32,6 @@
         <button id="send">Send</button>
     </div>
 </div>
-</body>
 
 <script>
     var info = {{{info}}}
@@ -38,8 +55,11 @@
             to_id: info.to.id,  
             from_id: info.from.id
         });
-        message.value=null;
+        output.innerHTML += "<P class='me'> <strong>"+info.from.name.split(' ')[0]+ ': </strong>'+ message.value +'</p>'
+        feedback.innerHTML =''
+        message.value = null
     })
+
 
     message.addEventListener("keyup", function(event) {
         if (event.keyCode === 13) {
@@ -54,9 +74,8 @@
 
     socket.on('private', function(data){
         console.log('private chat')
-        output.innerHTML += '<P> <strong>'+data.from_id+ ': </strong>'+ data.message +'</p>'
+        output.innerHTML += "<P class='friend'> <strong>"+info.to.name.split(' ')[0]+ ': </strong>'+ data.message +'</p>'
         feedback.innerHTML =''
-        socket.emit('self', data)
     })
 
     socket.on('typing', function(name){
