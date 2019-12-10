@@ -1,9 +1,5 @@
-const router = require('express').Router();
-const checkEmpty = require('../validator/empty');
-const User = require('../models/User');
+const router = require('express').Router(); const checkEmpty = require('../validator/empty'); const User = require('../models/User');
 const bcrypt = require('bcrypt');
-const saltRounds = 10;
-
 
 
 router.get('/', (req, res)=>{
@@ -55,17 +51,18 @@ router.post('/', (req, res)=>{
                             email: email
                         }
                     })
-                        .then(user=>{
+                    .then(user=>{
                             if(user){
                                 errors.email = "Email has already been registered"
                                 res.render('signup', {title: 'KuraHaru', errors:errors})
                             }
                             else{
-                                const salt = bcrypt.genSaltSync(saltRounds);
+                                const salt = bcrypt.genSaltSync(10);
                                 const hash = bcrypt.hashSync(password, salt);
                                 User.create({name: fullName, username, email, password:hash})
                                     .then(()=>{
-                                        console.log('created new user: ',username);                    
+                                        console.log('created new user: ',username);
+                                        console.log('hash: ',hash );                    
                                         res.redirect('/')
                                     })
                                     .catch(err=>console.log(err))
@@ -77,5 +74,4 @@ router.post('/', (req, res)=>{
         }
 });
 
-module.exports = router;
-
+module.exports = router; 

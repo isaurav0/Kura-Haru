@@ -7,7 +7,6 @@ const LocalStrategy = require('passport-local').Strategy;
 
 
 const bcrypt = require('bcrypt');
-const saltRounds = 10;
 
 
 router.get('/', (req, res)=>{
@@ -27,18 +26,21 @@ passport.use(new LocalStrategy(
                     console.log('not user')
                     return done(null, false, {message: 'Incorrect Username'})
                 }
-                const salt = bcrypt.genSaltSync(saltRounds)
-                const hash = bcrypt.hashSync(password, salt);
-                // console.log('hash -> ', hash)
-                // console.log('password -> ', user.password)
-                // console.log('From passport: ',user)
-                bcrypt.compare(hash, user.password, (err, isMatch)=>{
-                    if(err){
-                        console.log(err)
-                        return done(null, false, {message: 'Incorrect Password'})
-                    }
-                    return done(null, user)
-                });
+                var validity = bcrypt.compareSync(password, user.password);
+                if(!validity){
+                    return done(null, false, {message: 'Incorrect Password'})
+                }
+                else
+                    return done(null, user) 
+                
+                // if(hash==user.password){
+                //    console.log('matched')
+                //     return done(null, user)
+                // }
+                // else{
+                //     console.log('password not matched')
+                //     return done(null, false , {message: 'incorrect password'})
+                // }
             })
             .catch(err=>console.log(err))
     }
@@ -78,8 +80,6 @@ router.get('/logout', ensureAuthenticated, (req, res)=>{
     req.logout();
     res.redirect('/');
 })
-
-
 
 // router.post('/login', (req, res)=>{
 //     var username = req.body.username.toLowerCase();
